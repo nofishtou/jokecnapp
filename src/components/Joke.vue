@@ -6,7 +6,7 @@
     <div class="joke-info">
       <img v-if="isFavourite()" @click="removeFavourite" class="joke-info-heart" src="@/assets/img/heart.png" alt="heart">
       <img v-else @click="addFavourite" class="joke-info-heart" src="@/assets/img/emptyheart.png" alt="empty-heart">
-      <span class="joke-small-text">ID:<a :href="joke.url">{{joke.id}} <img class="joke-info-link" src="@/assets/img/link.png" alt="link"></a></span>
+      <span class="joke-small-text">ID: <a :href="joke.url" class="joke-info-link">{{joke.id}}<img class="joke-info-link-icon" src="@/assets/img/link.png" alt="link"></a></span>
       <p class="joke-medium-text">{{joke.value}}</p>
       <div class="joke-info-bottom">
         <span class="joke-small-text">{{getDate()}}</span>
@@ -73,6 +73,10 @@ export default {
   }
 
   .joke-info-link {
+    margin-left: 3px;
+  }
+
+  .joke-info-link-icon {
     margin-left: 5px;
     width: 10px;
     height: 10px;

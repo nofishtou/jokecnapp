@@ -5,7 +5,7 @@
     </div>
     <div class="favourite-info">
       <img class="favourite-info-heart" src="@/assets/img/heart.png" alt="heart" @click="removeFavourite">
-      <span class="favourite-small-text">ID:<a :href="favourite.url">{{favourite.id}} <img class="favourite-info-link" src="@/assets/img/link.png" alt="link"></a></span>
+      <span class="favourite-small-text">ID:<a :href="favourite.url" class="favourite-info-link">{{favourite.id}} <img class="favourite-info-link-icon" src="@/assets/img/link.png" alt="link"></a></span>
       <p class="favourite-medium-text">{{favourite.value}}</p>
       <div class="favourite-info-bottom">
         <span class="favourite-small-text">{{getDate()}}</span>
@@ -66,6 +66,10 @@ export default {
   }
 
   .favourite-info-link {
+    margin-left: 3px;
+  }
+
+  .favourite-info-link-icon {
     margin-left: 5px;
     width: 10px;
     height: 10px;
