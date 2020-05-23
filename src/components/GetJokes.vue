@@ -9,7 +9,7 @@
       <label class="get-jokes-label" for="categoryInput"><input type="radio" id="categoryInput" class="get-jokes-form-radio" value="category" v-model="typeRequest">From category</label><br>
       <Categories :category="category" v-if="typeRequest === 'category'" @get-cat="getCategory"/>
       <label class="get-jokes-label" for="searchInput"><input type="radio" id="searchInput" class="get-jokes-form-radio" value="search" v-model="typeRequest">Search</label><br>
-      <input type="text" v-model="text" class="get-gokes-form-text" v-if="typeRequest === 'search'">
+      <input type="text" v-model="text" class="get-gokes-form-text" v-if="typeRequest === 'search'" placeholder="Free text search...">
       <button class="get-jokes-btn" type="submit" >Get a Joke</button>
       <Loader v-if="loading"/>
     </form>
