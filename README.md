@@ -2,7 +2,7 @@
 
 ## Live site
 ```
-<a href="https://chuck-norris-joke-app.netlify.app/"> Link </a>
+https://chuck-norris-joke-app.netlify.app/
 ```
 
 ## Project setup
