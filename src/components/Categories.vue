@@ -1,21 +1,21 @@
 <template>
-  <div class='categories' v-on:click="$emit('get-cat',$event)">
-    <span class="category" v-bind:class="isActive('animal')">animal</span>
-    <span class="category" v-bind:class="isActive('career')">career</span>
-    <span class="category" v-bind:class="isActive('celebrity')">celebrity</span>
-    <span class="category" v-bind:class="isActive('dev')">dev</span>
-    <span class="category" v-bind:class="isActive('explicit')">explicit</span>
-    <span class="category" v-bind:class="isActive('fashion')">fashion</span>
-    <span class="category" v-bind:class="isActive('food')">food</span>
-    <span class="category" v-bind:class="isActive('history')">history</span>
-    <span class="category" v-bind:class="isActive('money')">money</span>
-    <span class="category" v-bind:class="isActive('movie')">movie</span>
-    <span class="category" v-bind:class="isActive('music')">music</span>
-    <span class="category" v-bind:class="isActive('political')">political</span>
-    <span class="category" v-bind:class="isActive('religion')">religion</span>
-    <span class="category" v-bind:class="isActive('science')">science</span>
-    <span class="category" v-bind:class="isActive('sport')">sport</span>
-    <span class="category" v-bind:class="isActive('travel')">travel</span>
+  <div class='categories' @click="$emit('get-cat',$event)">
+    <span class="category" :class="isActive('animal')">animal</span>
+    <span class="category" :class="isActive('career')">career</span>
+    <span class="category" :class="isActive('celebrity')">celebrity</span>
+    <span class="category" :class="isActive('dev')">dev</span>
+    <span class="category" :class="isActive('explicit')">explicit</span>
+    <span class="category" :class="isActive('fashion')">fashion</span>
+    <span class="category" :class="isActive('food')">food</span>
+    <span class="category" :class="isActive('history')">history</span>
+    <span class="category" :class="isActive('money')">money</span>
+    <span class="category" :class="isActive('movie')">movie</span>
+    <span class="category" :class="isActive('music')">music</span>
+    <span class="category" :class="isActive('political')">political</span>
+    <span class="category" :class="isActive('religion')">religion</span>
+    <span class="category" :class="isActive('science')">science</span>
+    <span class="category" :class="isActive('sport')">sport</span>
+    <span class="category" :class="isActive('travel')">travel</span>
   </div>
 </template>
 

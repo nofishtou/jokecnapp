@@ -4,8 +4,8 @@
       <img class="favourite-icon" src="@/assets/img/favicon.png" alt="text icon">
     </div>
     <div class="favourite-info">
-      <img class="favourite-info-heart" src="@/assets/img/heart.png" alt="heart" v-on:click="removeFavourite">
-      <span class="favourite-small-text">ID:<a v-bind:href="favourite.url">{{favourite.id}} <img class="favourite-info-link" src="@/assets/img/link.png" alt="link"></a></span>
+      <img class="favourite-info-heart" src="@/assets/img/heart.png" alt="heart" @click="removeFavourite">
+      <span class="favourite-small-text">ID:<a :href="favourite.url">{{favourite.id}} <img class="favourite-info-link" src="@/assets/img/link.png" alt="link"></a></span>
       <p class="favourite-medium-text">{{favourite.value}}</p>
       <div class="favourite-info-bottom">
         <span class="favourite-small-text">{{getDate()}}</span>

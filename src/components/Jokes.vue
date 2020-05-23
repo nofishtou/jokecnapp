@@ -1,12 +1,13 @@
 <template>
   <div class="jokes">
+    <p v-if="results === 0" class='jokes-text'>no jokes found :C</p>
     <Joke
       v-for="joke of jokes"
-      v-bind:joke="joke"
-      v-bind:favourites="favourites"
+      :joke="joke"
+      :favourites="favourites"
       :key="joke.id"
-      v-on:add-favourite="addFavourite"
-      v-on:remove-favourite="removeFavourite"
+      @add-favourite="addFavourite"
+      @remove-favourite="removeFavourite"
     />
   </div>
 </template>
@@ -15,7 +16,7 @@
 import Joke from '@/components/Joke.vue';
 
 export default {
-  props: ['jokes', 'favourites'],
+  props: ['jokes', 'favourites', 'results'],
   components: {
     Joke,
   },
@@ -35,6 +36,15 @@ export default {
 
 <style scoped>
   .jokes {
-    padding: 40px 0px;
+    padding: 40px 20px;
+  }
+
+  .jokes-text{
+    width: 80%;
+    text-align: center;
+    font-family: "Roboto-Regular", "Arial", sans-serif;
+    font-size: 18px;
+    line-height: 26px;
+    color: #333333;
   }
 </style>

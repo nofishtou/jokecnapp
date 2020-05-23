@@ -4,27 +4,28 @@
       <div class="jokes-cont">
         <div class="jokes-nav">
           <h1 class="jokes-heading">MSI 2020</h1>
-          <img class="show-icon" v-on:click="showFavourites"  src="@/assets/img/showicon.png" alt="show-icon">
+          <img class="show-icon" @click="showFavourites"  src="@/assets/img/showicon.png" alt="show-icon">
         </div>
         
         <GetJokes 
           @get-jokes="getJokes"
         />
         <Jokes 
-          v-bind:jokes="jokes"
-          v-bind:favourites="favourites"
-           @add-favourite = "addFavourite"
-           @remove-favourite = "removeFavourite"
+          :jokes="jokes"
+          :favourites="favourites"
+          :results="results"
+          @add-favourite = "addFavourite"
+          @remove-favourite = "removeFavourite"
         />
       </div>
       <div class="favourites">
         <div class="favourites-nav">
-          <img  class="hide-icon" v-on:click="hideFavourites" src="@/assets/img/hideicon.png" alt="hide-icon">
+          <img  class="hide-icon" @click="hideFavourites" src="@/assets/img/hideicon.png" alt="hide-icon">
           <h3 class="favourites-heading">Favourite</h3>
         </div>
         <Favourite  
           v-for="favourite of favourites"
-          v-bind:favourite="favourite"
+          :favourite="favourite"
           :key="favourite.id"
           @remove-favourite = "removeFavourite"
         />
@@ -43,6 +44,7 @@ export default {
   name: 'App',
   data () {
     return {
+      results: null,
       favourites: [],
       jokes: []
     }
@@ -55,10 +57,12 @@ export default {
   methods: {
     getJokes(jokes) {
       if(jokes.result){
+        this.results = jokes.total;
         this.jokes = [...jokes.result];
       } else {
         const newJokes =[]
         newJokes.push(jokes)
+        this.results = null;
         this.jokes = newJokes;
       }
     },

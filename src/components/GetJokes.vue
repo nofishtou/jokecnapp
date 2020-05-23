@@ -7,16 +7,18 @@
     <form @submit.prevent="onSubmit">
       <label class="get-jokes-label" for="randomInput"><input type="radio" id="randomInput" class="get-jokes-form-radio" value="random" v-model="typeRequest">Random</label><br>
       <label class="get-jokes-label" for="categoryInput"><input type="radio" id="categoryInput" class="get-jokes-form-radio" value="category" v-model="typeRequest">From category</label><br>
-      <Categories v-bind:category="category" v-if="typeRequest === 'category'" @get-cat="getCategory"/>
+      <Categories :category="category" v-if="typeRequest === 'category'" @get-cat="getCategory"/>
       <label class="get-jokes-label" for="searchInput"><input type="radio" id="searchInput" class="get-jokes-form-radio" value="search" v-model="typeRequest">Search</label><br>
       <input type="text" v-model="text" class="get-gokes-form-text" v-if="typeRequest === 'search'">
       <button class="get-jokes-btn" type="submit" >Get a Joke</button>
+      <Loader v-if="loading"/>
     </form>
   </div>
 </template>
 
 <script>
 import Categories from '@/components/Categories';
+import Loader from '@/components/Loader'
 
 export default {
   name: 'GetJokes',
@@ -25,11 +27,15 @@ export default {
       typeRequest: 'random',
       category: 'animal',
       text: '',
+      loading: false,
     };
   },
   methods: {
     onSubmit() {
       let urlRequest = 'https://api.chucknorris.io/jokes/';
+
+      this.loading = true;
+
       if (this.typeRequest === 'random') {
         urlRequest += 'random';
       }
@@ -41,10 +47,18 @@ export default {
         if (!this.text) return;
         urlRequest += `${this.typeRequest}?query=${this.text}`;
       }
+
       fetch(urlRequest)
         .then((res) => res.json())
-        .then((data) => this.$emit('get-jokes', data))
-        .catch((e) => new Error(`${e}`));
+        .then((data) => {
+          this.$emit('get-jokes', data)
+          this.loading = false;
+          this.text = '';
+        })
+        .catch((e) =>{
+          this.loading = false;
+          new Error(`${e}`)
+        });
     },
     getCategory(event) {
       if (event.target.classList.contains('category')) {
@@ -57,15 +71,15 @@ export default {
     },
   },
   components: {
-    Categories,
+    Categories, 
+    Loader,
   },
 };
 </script>
 
 <style scoped>
 .get-jokes {
-  padding-top: 2rem;
-  padding-left: 1rem;
+  padding: 30px 20px 0px;
   width: 100%;
   text-align: left;
 }
@@ -122,6 +136,12 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .get-gokes-form-text {
+    width: 100%;
+  }
+}
 
 @media (min-width: 375px) and (max-width: 767px) {
   .get-gokes-form-text {

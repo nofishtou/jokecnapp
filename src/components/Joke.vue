@@ -4,9 +4,9 @@
       <img class="joke-icon" src="@/assets/img/icon.png" alt="text icon">
     </div>
     <div class="joke-info">
-      <img v-if="isFavourite()" v-on:click="removeFavourite" class="joke-info-heart" src="@/assets/img/heart.png" alt="heart">
-      <img v-else v-on:click="addFavourite" class="joke-info-heart" src="@/assets/img/emptyheart.png" alt="empty-heart">
-      <span class="joke-small-text">ID:<a v-bind:href="joke.url">{{joke.id}} <img class="joke-info-link" src="@/assets/img/link.png" alt="link"></a></span>
+      <img v-if="isFavourite()" @click="removeFavourite" class="joke-info-heart" src="@/assets/img/heart.png" alt="heart">
+      <img v-else @click="addFavourite" class="joke-info-heart" src="@/assets/img/emptyheart.png" alt="empty-heart">
+      <span class="joke-small-text">ID:<a :href="joke.url">{{joke.id}} <img class="joke-info-link" src="@/assets/img/link.png" alt="link"></a></span>
       <p class="joke-medium-text">{{joke.value}}</p>
       <div class="joke-info-bottom">
         <span class="joke-small-text">{{getDate()}}</span>
