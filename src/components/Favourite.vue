@@ -16,13 +16,14 @@
 </template>
 
 <script>
+import * as moment from "moment/moment";
+
 export default {
   props: ['favourite'],
   methods: {
     getDate() {
-      const today = new Date();
-      const created = new Date(this.favourite.updated_at);
-      return `${Math.floor((today.getTime() - created.getTime()) / (1000 * 60 * 60))} hours ago`;
+      const time = moment.duration(moment().diff(moment(this.favourite.updated_at))).asHours();
+      return `${Math.floor(time)} hours ago`;
     },
     removeFavourite() {
       this.$emit('remove-favourite', this.favourite);
