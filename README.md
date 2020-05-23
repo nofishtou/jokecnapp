@@ -1,9 +1,9 @@
 # chuckjokeapp
 
 ## Live site
-```
+
 https://chuck-norris-joke-app.netlify.app/
-```
+
 
 ## Project setup
 ```
