@@ -1,5 +1,10 @@
 # chuckjokeapp
 
+## Live site
+```
+See [Click](https://chuck-norris-joke-app.netlify.app/)
+```
+
 ## Project setup
 ```
 npm install
