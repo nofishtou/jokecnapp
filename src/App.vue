@@ -6,101 +6,59 @@
           <h1 class="jokes-heading">MSI 2020</h1>
           <img class="show-icon" @click="showFavourites"  src="@/assets/img/showicon.png" alt="show-icon">
         </div>
-        
-        <GetJokes 
-          @get-jokes="getJokes"
-        />
-        <Jokes 
-          :jokes="jokes"
-          :favourites="favourites"
-          :results="results"
-          @add-favourite = "addFavourite"
-          @remove-favourite = "removeFavourite"
+
+        <GetJokes />
+        <Jokes
+          :jokes="allJokes"
         />
       </div>
-      <div class="favourites">
+      <div class="favourites" ref="favourites">
         <div class="favourites-nav">
-          <img  class="hide-icon" @click="hideFavourites" src="@/assets/img/hideicon.png" alt="hide-icon">
+          <img  class="hide-icon" @click="hideFavourites"  src="@/assets/img/hideicon.png" alt="hide-icon">
           <h3 class="favourites-heading">Favourite</h3>
         </div>
-        <Favourite  
-          v-for="favourite of favourites"
+        <Favourite
+          v-for="favourite of allFavourites"
           :favourite="favourite"
           :key="favourite.id"
-          @remove-favourite = "removeFavourite"
         />
-      </div> 
+      </div>
     </div>
-    <div class="shadow-background" v-on:click="hideFavourites"></div>
+    <div class="shadow-background" ref="shadowBackground" v-on:click="hideFavourites"></div>
   </div>
 </template>
 
 <script>
-import GetJokes from '@/components/GetJokes.vue'
-import Jokes from '@/components/Jokes.vue'
-import Favourite from '@/components/Favourite.vue'
+import GetJokes from '@/components/GetJokes';
+import Jokes from '@/components/Jokes';
+import Favourite from '@/components/Favourite';
 
 export default {
   name: 'App',
-  data () {
-    return {
-      results: null,
-      favourites: [],
-      jokes: []
-    }
+  computed: {
+    allJokes() {
+      return this.$store.getters.getAllJokes;
+    },
+    allFavourites() {
+      return this.$store.getters.getAllFavourites;
+    },
   },
-  mounted(){
-    if(this.getUserData()){
-      this.favourites = this.getUserData()
-    }
-  },  
   methods: {
-    getJokes(jokes) {
-      if(jokes.result){
-        this.results = jokes.total;
-        this.jokes = [...jokes.result];
-      } else {
-        const newJokes =[]
-        newJokes.push(jokes)
-        this.results = null;
-        this.jokes = newJokes;
-      }
-    },
-    addFavourite(joke){
-      if(!this.favourites.includes(joke)) {
-        this.favourites.push(joke)
-        this.storeUserData()
-      }
-    },
-    removeFavourite(favourite) {
-      this.favourites = this.favourites.filter((el) => el.id !== favourite.id )
-      this.storeUserData()
-    },
-    getUserData() {
-      return JSON.parse(localStorage.getItem('favourites'))
-    },
-    storeUserData() {
-      localStorage.setItem('favourites', JSON.stringify(this.favourites))
-    },
     showFavourites() {
-      const fav = document.querySelector('.favourites');
-      const shadowBackground = document.querySelector('.shadow-background')
-      fav.classList.add('show')
-      shadowBackground.classList.add('shadow-background-active')
+      this.$refs.favourites.classList.add('show');
+      this.$refs.shadowBackground.classList.add('shadow-background-active');
     },
-    hideFavourites(){
-      const fav = document.querySelector('.favourites');
-      const shadowBackground = document.querySelector('.shadow-background')
-      fav.classList.remove('show')
-      shadowBackground.classList.remove('shadow-background-active')
+    hideFavourites() {
+      this.$refs.favourites.classList.remove('show');
+      this.$refs.shadowBackground.classList.remove('shadow-background-active');
     },
   },
   components: {
     GetJokes,
     Jokes,
-    Favourite
-  }
-}
+    Favourite,
+  },
+};
 </script>
 
 <style>
@@ -310,23 +268,23 @@ export default {
 }
 
 @font-face {
-  font-family: "Roboto-Bold";  
-  src: url("~@/assets/fonts/Roboto-Bold.ttf") format("truetype"); 
-  font-style: normal; 
+  font-family: "Roboto-Bold";
+  src: url("~@/assets/fonts/Roboto-Bold.ttf") format("truetype");
+  font-style: normal;
   font-weight: 700;
 }
 
 @font-face {
-  font-family: "Roboto-Medium";  
-  src: url("~@/assets/fonts/Roboto-Medium.ttf") format("truetype"); 
-  font-style: normal; 
+  font-family: "Roboto-Medium";
+  src: url("~@/assets/fonts/Roboto-Medium.ttf") format("truetype");
+  font-style: normal;
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "Roboto-Regular";  
-  src: url("~@/assets/fonts/Roboto-Regular.ttf") format("truetype"); 
-  font-style: normal; 
+  font-family: "Roboto-Regular";
+  src: url("~@/assets/fonts/Roboto-Regular.ttf") format("truetype");
+  font-style: normal;
   font-weight: 400;
 }
 </style>

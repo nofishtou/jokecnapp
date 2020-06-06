@@ -1,7 +1,7 @@
 <template>
   <div class="favourite">
     <div class="favourite-icon-cont">
-      <img class="favourite-icon" src="@/assets/img/favicon.png" alt="text icon">
+      <img class="favourite-icon" src="@/assets/img/favouriteicon.png" alt="text icon">
     </div>
     <div class="favourite-info">
       <img class="favourite-info-heart" src="@/assets/img/heart.png" alt="heart" @click="removeFavourite">
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import * as moment from "moment/moment";
+import * as moment from 'moment/moment';
 
 export default {
   props: ['favourite'],
@@ -26,7 +26,7 @@ export default {
       return `${Math.floor(time)} hours ago`;
     },
     removeFavourite() {
-      this.$emit('remove-favourite', this.favourite);
+      this.$store.dispatch('removeFavourite', this.favourite.id);
     },
   },
 };

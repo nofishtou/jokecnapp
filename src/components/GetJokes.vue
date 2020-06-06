@@ -7,58 +7,38 @@
     <form @submit.prevent="onSubmit">
       <label class="get-jokes-label" for="randomInput"><input type="radio" id="randomInput" class="get-jokes-form-radio" value="random" v-model="typeRequest">Random</label><br>
       <label class="get-jokes-label" for="categoryInput"><input type="radio" id="categoryInput" class="get-jokes-form-radio" value="category" v-model="typeRequest">From category</label><br>
-      <Categories :category="category" v-if="typeRequest === 'category'" @get-cat="getCategory"/>
+      <Categories :category="category" v-if="typeRequest === 'category'" @get-category="getCategory"/>
       <label class="get-jokes-label" for="searchInput"><input type="radio" id="searchInput" class="get-jokes-form-radio" value="search" v-model="typeRequest">Search</label><br>
       <input type="text" v-model="text" class="get-gokes-form-text" v-if="typeRequest === 'search'" placeholder="Free text search...">
       <button class="get-jokes-btn" type="submit" >Get a Joke</button>
-      <Loader v-if="loading"/>
+      <Loader v-if="loadingStatus"/>
     </form>
   </div>
 </template>
 
 <script>
 import Categories from '@/components/Categories';
-import Loader from '@/components/Loader'
+import Loader from '@/components/Loader';
 
 export default {
   name: 'GetJokes',
+  computed: {
+    loadingStatus() {
+      return this.$store.getters.loadingStatus;
+    },
+  },
   data() {
     return {
       typeRequest: 'random',
       category: 'animal',
       text: '',
-      loading: false,
     };
   },
   methods: {
     onSubmit() {
-      let urlRequest = 'https://api.chucknorris.io/jokes/';
-
-      this.loading = true;
-
-      if (this.typeRequest === 'random') {
-        urlRequest += 'random';
-      }
-      if (this.typeRequest === 'category') {
-        urlRequest += `random?category=${this.category}`;
-      }
-      if (this.typeRequest === 'search') {
-        // validation on empty string
-        if (!this.text) return;
-        urlRequest += `${this.typeRequest}?query=${this.text}`;
-      }
-
-      fetch(urlRequest)
-        .then((res) => res.json())
-        .then((data) => {
-          this.$emit('get-jokes', data)
-          this.loading = false;
-          this.text = '';
-        })
-        .catch((e) =>{
-          this.loading = false;
-          new Error(`${e}`)
-        });
+      const params = { typeRequest: this.typeRequest, category: this.category, text: this.text };
+      this.$store.dispatch('fetchJokes', params);
+      this.text = '';
     },
     getCategory(event) {
       if (event.target.classList.contains('category')) {
@@ -71,7 +51,7 @@ export default {
     },
   },
   components: {
-    Categories, 
+    Categories,
     Loader,
   },
 };

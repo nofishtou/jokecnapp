@@ -4,7 +4,7 @@
       <img class="joke-icon" src="@/assets/img/icon.png" alt="text icon">
     </div>
     <div class="joke-info">
-      <img v-if="isFavourite()" @click="removeFavourite" class="joke-info-heart" src="@/assets/img/heart.png" alt="heart">
+      <img v-if="isFavourite" @click="removeFavourite" class="joke-info-heart" src="@/assets/img/heart.png" alt="heart">
       <img v-else @click="addFavourite" class="joke-info-heart" src="@/assets/img/emptyheart.png" alt="empty-heart">
       <span class="joke-small-text">ID: <a :href="joke.url" class="joke-info-link">{{joke.id}}<img class="joke-info-link-icon" src="@/assets/img/link.png" alt="link"></a></span>
       <p class="joke-medium-text">{{joke.value}}</p>
@@ -17,23 +17,25 @@
 </template>
 
 <script>
-import * as moment from "moment/moment";
+import * as moment from 'moment/moment';
 
 export default {
-  props: ['joke', 'favourites'],
+  props: ['joke'],
+  computed: {
+    isFavourite() {
+      return this.$store.getters.isFavourite(this.joke.id);
+    },
+  },
   methods: {
     getDate() {
       const time = moment.duration(moment().diff(moment(this.joke.updated_at))).asHours();
       return `${Math.floor(time)} hours ago`;
     },
     addFavourite() {
-      this.$emit('add-favourite', this.joke);
+      this.$store.dispatch('addFavourite', this.joke);
     },
     removeFavourite() {
-      this.$emit('remove-favourite', this.joke);
-    },
-    isFavourite() {
-      return this.favourites.some((el) => el.id === this.joke.id);
+      this.$store.dispatch('removeFavourite', this.joke.id);
     },
   },
 };

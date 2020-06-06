@@ -4,32 +4,23 @@
     <Joke
       v-for="joke of jokes"
       :joke="joke"
-      :favourites="favourites"
       :key="joke.id"
-      @add-favourite="addFavourite"
-      @remove-favourite="removeFavourite"
     />
   </div>
 </template>
 
 <script>
-import Joke from '@/components/Joke.vue';
+import Joke from '@/components/Joke';
 
 export default {
-  props: ['jokes', 'favourites', 'results'],
+  props: ['jokes'],
+  computed: {
+    results() {
+      return this.$store.getters.getResults;
+    },
+  },
   components: {
     Joke,
-  },
-  methods: {
-    addFavourite(joke) {
-      this.$emit('add-favourite', joke);
-    },
-    removeFavourite(favourite) {
-      this.$emit('remove-favourite', favourite);
-    },
-    isFavourite(joke) {
-      this.$emit('is-favourite', joke);
-    },
   },
 };
 </script>

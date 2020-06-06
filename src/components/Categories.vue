@@ -1,5 +1,5 @@
 <template>
-  <div class='categories' @click="$emit('get-cat',$event)">
+  <div class='categories' @click="$emit('get-category',$event)">
     <span class="category" :class="isActive('animal')">animal</span>
     <span class="category" :class="isActive('career')">career</span>
     <span class="category" :class="isActive('celebrity')">celebrity</span>
